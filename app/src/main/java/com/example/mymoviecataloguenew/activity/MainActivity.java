@@ -1,4 +1,4 @@
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.activity;
 
 import android.content.Intent;
 import android.provider.Settings;
@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.example.mymoviecataloguenew.R;
+import com.example.mymoviecataloguenew.adap.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity  {
     Toolbar toolbar;

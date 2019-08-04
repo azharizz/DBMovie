@@ -1,4 +1,4 @@
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.useless;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

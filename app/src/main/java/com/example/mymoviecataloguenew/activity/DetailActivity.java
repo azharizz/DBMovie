@@ -1,10 +1,13 @@
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.mymoviecataloguenew.useless.Movie;
+import com.example.mymoviecataloguenew.R;
 
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";

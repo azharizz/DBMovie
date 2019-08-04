@@ -1,4 +1,4 @@
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.useless;
 
 public class StringsAPI {
     private static String API_KEY = "103f11c7f4c23b41d3505f7544913590";

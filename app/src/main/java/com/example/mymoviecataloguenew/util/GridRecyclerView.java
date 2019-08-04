@@ -1,4 +1,4 @@
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.util;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;

@@ -1,11 +1,12 @@
 
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+import java.util.List;
+
+public class ResultMovie {
 
     @SerializedName("vote_count")
     @Expose

@@ -1,11 +1,12 @@
 
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MovieItem {
+import java.util.List;
+
+public class TvItem {
 
     @SerializedName("page")
     @Expose
@@ -18,7 +19,7 @@ public class MovieItem {
     private Integer totalPages;
     @SerializedName("results")
     @Expose
-    private List<Result> results = null;
+    private List<ResultTv> results = null;
 
     public Integer getPage() {
         return page;
@@ -44,11 +45,11 @@ public class MovieItem {
         this.totalPages = totalPages;
     }
 
-    public List<Result> getResults() {
+    public List<ResultTv> getResults() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(List<ResultTv> results) {
         this.results = results;
     }
 

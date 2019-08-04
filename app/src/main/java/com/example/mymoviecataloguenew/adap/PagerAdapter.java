@@ -1,8 +1,11 @@
-package com.example.mymoviecataloguenew;
+package com.example.mymoviecataloguenew.adap;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.mymoviecataloguenew.fragment.MovieFragment;
+import com.example.mymoviecataloguenew.fragment.TvShowFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
     private int numOfTabs;
