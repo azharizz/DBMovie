@@ -1,12 +1,15 @@
 
 package com.example.mymoviecataloguenew.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ResultMovie {
+public class ResultMovie implements Parcelable {
 
     @SerializedName("vote_count")
     @Expose
@@ -163,4 +166,37 @@ public class ResultMovie {
         this.releaseDate = releaseDate;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
+        dest.writeString(releaseDate);
+        dest.writeDouble(voteAverage);
+    }
+
+    public static final Creator<ResultMovie> CREATOR = new Creator<ResultMovie>() {
+        @Override
+        public ResultMovie createFromParcel(Parcel in) {
+            return new ResultMovie(in);
+        }
+
+        @Override
+        public ResultMovie[] newArray(int size) {
+            return new ResultMovie[size];
+        }
+    };
+
+    ResultMovie(Parcel in) {
+        title = in.readString();
+        posterPath = in.readString();
+        backdropPath = in.readString();
+        releaseDate = in.readString();
+        voteAverage = in.readDouble();
+    }
 }

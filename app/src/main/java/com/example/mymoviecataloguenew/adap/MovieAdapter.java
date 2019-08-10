@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.mymoviecataloguenew.R;
 import com.example.mymoviecataloguenew.activity.DetailActivity;
+import com.example.mymoviecataloguenew.model.MovieItem;
 import com.example.mymoviecataloguenew.model.ResultMovie;
 import com.example.mymoviecataloguenew.useless.Movie;
 import com.squareup.picasso.Picasso;
@@ -20,11 +21,18 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
     private Context context;
-    List<ResultMovie> resultMovies;
+    public static List<ResultMovie> resultMovies;
+    public static List<MovieItem> movieItems;
 
-    public MovieAdapter(List<ResultMovie> resultMovies) {
+
+    public MovieAdapter(Context context, List<ResultMovie> resultMovies) {
+        this.context = context;
         this.resultMovies = resultMovies;
     }
+
+//    public MovieAdapter(List<ResultMovie> resultMovies) {
+//        this.resultMovies = resultMovies;
+//    }
 
 
 
@@ -39,17 +47,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
 
 // set the data
-        holder.tvName.setText(resultMovies.get(position).getOriginalTitle());
+        holder.tvName.setText(resultMovies.get(position).getTitle());
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/w185/" + resultMovies.get(position).getPosterPath())
                 .into(holder.imgPhoto);
 
-
+        holder.tvVote.setText(""+resultMovies.get(position).getVoteAverage());
     }
 
-    public void setData(List<ResultMovie> resultMovies) {
-        this.resultMovies = resultMovies;
-    }
+
+
 
 
     @Override
@@ -59,7 +66,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgPhoto;
-        TextView tvName;
+        TextView tvName,tvVote;
         Movie movie;
 
 
@@ -67,6 +74,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.img_item_photo);
             tvName = itemView.findViewById(R.id.tv_item_name);
+            tvVote=itemView.findViewById(R.id.tv_item_vote);
         }
 
 

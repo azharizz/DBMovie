@@ -17,19 +17,4 @@ public class ApiClient {
         return retrofit;
     }
 
-//    private static Retrofit retrofit = null;
-//
-//    public static ApiInterface getClient() {
-//
-//        // change your base URL
-//        if (retrofit == null) {
-//            retrofit = new Retrofit.Builder()
-//                    .baseUrl(BASE_URL)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build();
-//        }
-//        //Creating object for our interface
-//        ApiInterface api = retrofit.create(ApiInterface.class);
-//        return api; // return the APIInterface object
-//    }
 }

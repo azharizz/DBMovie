@@ -1,25 +1,28 @@
 package com.example.mymoviecataloguenew.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.mymoviecataloguenew.R;
 import com.example.mymoviecataloguenew.adap.PagerAdapter;
+import com.example.mymoviecataloguenew.base.BaseAppCompatActivity;
+import com.example.mymoviecataloguenew.fragment.MovieFragment;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends BaseAppCompatActivity {
     Toolbar toolbar;
     TabLayout tabLayout;
     TabItem tabMovies;
     TabItem tabTvShow;
     ViewPager viewPager;
+    private Fragment pageContent = new MovieFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,15 @@ public class MainActivity extends AppCompatActivity  {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(getString(R.string.app_name));
+
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.viewPager, pageContent).commit();
+        } else {
+            pageContent = getSupportFragmentManager().getFragment(savedInstanceState, KEY_FRAGMENT);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.viewPager, pageContent).commit();
+        }
     }
 
     @Override
@@ -60,4 +72,9 @@ public class MainActivity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getSupportFragmentManager().putFragment(outState, KEY_FRAGMENT, pageContent);
+        super.onSaveInstanceState(outState);
+    }
 }

@@ -59,14 +59,10 @@ public class TvShowFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView;
         rootView = inflater.inflate(R.layout.fragment_movie, container, false);
-//        adapter = new MovieAdapter();
-//        adapter.notifyDataSetChanged();
-//        sendRequest();
 
         recyclerView = rootView.findViewById(R.id.rv_category_movie);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-//        recyclerView.setAdapter(adapter);
         movieLoad();
 
         progressBar = container.findViewById(R.id.progressBar);
@@ -78,99 +74,18 @@ public class TvShowFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        mainViewModel.setTV();
-//        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-//        mainViewModel.getTV().observe(this, getMovie);
     }
 
-//
-//    private void showLoading(Boolean state) {
-//        if (state) {
-//            progressBar.setVisibility(View.VISIBLE);
-//        } else {
-//            progressBar.setVisibility(View.GONE);
-//        }
-//    }
-//
-//    private Observer<ArrayList<Movie>> getMovie = new Observer<ArrayList<Movie>>() {
-//        @Override
-//        public void onChanged(ArrayList<Movie> movies) {
-//            if (movies != null) {
-//                adapter.setMovies(movies);
-//                showLoading(false);
-//            }
-//        }
-//    };
-//
-//    public void sendRequest() {
-//        requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, StringsAPI.POPULAR_MOVIES, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONArray obj = response.getJSONArray("resultMovies");
-//                    for (int i = 0; i < obj.length(); i++) {
-//
-//                        JSONObject jsonObject = obj.getJSONObject(i);
-//
-//                        Movie movie = new Movie(
-//                                jsonObject.getString("title"),
-//                                jsonObject.getString("poster_path"),
-//                                jsonObject.getString("overview"),
-//                                jsonObject.getJSONArray("genres").getJSONObject(0).getString("name"),
-//                                jsonObject.getString("release_date"),
-//                                jsonObject.getString("tagline"),
-//                                jsonObject.getString("id")
-////                                jsonObject.getString("id"),
-////                                jsonObject.getString("title"),
-////                                jsonObject.getString("poster_path"),
-////                                jsonObject.getString("backdrop_path"),
-////                                jsonObject.getString("overview")
-//                        );
-//                        movies.add(movie);
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        requestQueue.add(jsonObjectRequest);
-//    }
-
     private void movieLoad() {
-//        ApiInterface api = ApiClient.getRetrofit().create(ApiInterface.class);
-//        Call<MovieItem> call = api.getMovie();
-//        call.enqueue(new Callback<MovieItem>() {
-//            @Override
-//            public void onResponse(Call<MovieItem> call, Response<MovieItem> response) {
-//                MovieItem movieItem = response.body();
-//                adapter = new MovieAdapter(resultMovies);
-//                adapter.setData(movieItem.getResultMovies());
-//                recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MovieItem> call, Throwable t) {
-//
-//            }
-//        });
 
-        ApiInterface api= ApiClient.getRetrofit().create(ApiInterface.class);
-        Call<TvItem> call=api.getTv();
+        ApiInterface api = ApiClient.getRetrofit().create(ApiInterface.class);
+        Call<TvItem> call = api.getTv();
         call.enqueue(new Callback<TvItem>() {
             @Override
             public void onResponse(Call<TvItem> call, Response<TvItem> response) {
-                TvItem tvItem=response.body();
-                adapterr=new TvAdapter(resultTvs);
+                TvItem tvItem = response.body();
+                adapterr = new TvAdapter(tvItem.getResults());
 //                adapterr=new TvAdapter(tvItem.getResults());
-                adapterr.setData(tvItem.getResults());
                 recyclerView.setAdapter(adapterr);
             }
 
@@ -180,56 +95,5 @@ public class TvShowFragment extends Fragment {
             }
         });
     }
-
-
-//    private void getUserListData() {
-//        // display a progress dialog
-//
-//        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-//        progressDialog.setCancelable(false); // set cancelable to false
-//        progressDialog.setMessage("Please Wait"); // set message
-//        progressDialog.show(); // show progress dialog
-//
-//
-//        (ApiClient.getClient().getTv()).enqueue(new Callback<List<ResultMovie>>() {
-//            @Override
-//            public void onResponse(Call<List<ResultMovie>> call, Response<List<ResultMovie>> response) {
-////                Log.d("responseGET", response.body().get(0).getTitle());
-//                progressDialog.dismiss(); //dismiss progress dialog
-//                resultMovies = response.body();
-//                setDataInRecyclerView();
-//            }
-//
-//
-//            @Override
-//            public void onFailure(Call<List<ResultMovie>> call, Throwable t) {
-//                // if error occurs in network transaction then we can get the error in this method.
-//                final String txt=t.getMessage();
-////                getActivity().runOnUiThread(new Runnable() {
-////                    @Override
-////                    public void run() {
-////                        Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_LONG).show();
-////                t.printStackTrace();
-////                    }
-////                });
-//                progressDialog.dismiss(); //dismiss progress dialog
-//                t.getMessage();
-////                t.toString().printStackTrace();
-//
-//            }
-//        });
-//
-//
-//    }
-//
-//    private void setDataInRecyclerView() {
-//        // set a LinearLayoutManager with default vertical orientation
-//
-//        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-//        // call the constructor of UsersAdapter to send the reference and data to Adapter
-//        MovieAdapter usersAdapter = new MovieAdapter(getActivity(), resultMovies);
-////        recyclerView.setAdapter(adapter);
-//        recyclerView.setAdapter(usersAdapter); // set the Adapter to RecyclerView
-//    }
 
 }

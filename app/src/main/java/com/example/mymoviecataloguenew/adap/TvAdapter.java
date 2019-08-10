@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.mymoviecataloguenew.R;
 import com.example.mymoviecataloguenew.activity.DetailActivity;
-import com.example.mymoviecataloguenew.model.ResultMovie;
 import com.example.mymoviecataloguenew.model.ResultTv;
 import com.example.mymoviecataloguenew.useless.Movie;
 import com.squareup.picasso.Picasso;
@@ -21,7 +20,6 @@ import java.util.List;
 
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
     private Context context;
-    List<ResultMovie> resultMovies;
     List<ResultTv> resultTvs;
 
     public TvAdapter(List<ResultTv> resultTvs) {
@@ -38,14 +36,11 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TvHolder holder, int position) {
-        holder.tvName.setText(resultTvs.get(position).getOriginalName());
+        holder.tvName.setText(resultTvs.get(position).getName());
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/w185/" + resultTvs.get(position).getPosterPath())
                 .into(holder.imgPhoto);
-    }
-
-    public void setData(List<ResultTv> resultTvs) {
-        this.resultTvs = resultTvs;
+        holder.tvVote.setText(""+resultTvs.get(position).getVoteAverage());
     }
 
 
@@ -57,7 +52,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
 
     class TvHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgPhoto;
-        TextView tvName;
+        TextView tvName,tvVote;
         Movie movie;
 
 
@@ -65,6 +60,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.img_item_photo);
             tvName = itemView.findViewById(R.id.tv_item_name);
+            tvVote=itemView.findViewById(R.id.tv_item_vote);
         }
 
         @Override
