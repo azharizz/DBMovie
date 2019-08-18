@@ -9,18 +9,20 @@ import com.example.mymoviecataloguenew.adap.MovieAdapter;
 import com.example.mymoviecataloguenew.api.ApiClient;
 import com.example.mymoviecataloguenew.api.ApiInterface;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieViewModel extends ViewModel {
-    private MutableLiveData<MovieItem> movieList = new MutableLiveData<>();
+    private MutableLiveData<List<MovieItem>> movieList;
     private MovieAdapter adapter;
     private RecyclerView recyclerView;
 
-    public LiveData<MovieItem> getMovie() {
+    public LiveData<List<MovieItem>> getMovie() {
         if (movieList == null) {
-            movieList = new MutableLiveData<MovieItem>();
+            movieList = new MutableLiveData<List<MovieItem>>();
             movieLoad();
         }
         return movieList;
@@ -29,37 +31,35 @@ public class MovieViewModel extends ViewModel {
 
     private void movieLoad() {
         ApiInterface api = ApiClient.getRetrofit().create(ApiInterface.class);
-        Call<MovieItem> call = api.getMovie();
-        call.enqueue(new Callback<MovieItem>() {
+        Call<List<MovieItem>> call=api.getMovie();
+        call.enqueue(new Callback<List<MovieItem>>() {
             @Override
-            public void onResponse(Call<MovieItem> call, Response<MovieItem> response) {
+            public void onResponse(Call<List<MovieItem>> call, Response<List<MovieItem>> response) {
                 movieList.setValue(response.body());
-
             }
 
             @Override
-            public void onFailure(Call<MovieItem> call, Throwable t) {
+            public void onFailure(Call<List<MovieItem>> call, Throwable t) {
 
             }
         });
-    }
 
-//    private void movieLoad(){
-//        ApiInterface api= ApiClient.getRetrofit().create(ApiInterface.class);
-//        Call<List<MovieItem>> call=api.getMovie();
-//        call.enqueue(new Callback<List<MovieItem>>() {
+
+//        Call<MovieItem> call = api.getMovie();
+//        call.enqueue(new Callback<MovieItem>() {
 //            @Override
-//            public void onResponse(Call<List<MovieItem>> call, Response<List<MovieItem>> response) {
+//            public void onResponse(Call<MovieItem> call, Response<MovieItem> response) {
 //                movieList.setValue(response.body());
+//
 //            }
 //
 //            @Override
-//            public void onFailure(Call<List<MovieItem>> call, Throwable t) {
+//            public void onFailure(Call<MovieItem> call, Throwable t) {
 //
 //            }
 //        });
-//
-//    }
+    }
+
 
 
 }

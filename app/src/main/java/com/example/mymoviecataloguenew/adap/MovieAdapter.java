@@ -25,9 +25,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public static List<MovieItem> movieItems;
 
 
-    public MovieAdapter(Context context, List<ResultMovie> resultMovies) {
+    public MovieAdapter(Context context, List<MovieItem> movieItems) {
         this.context = context;
-        this.resultMovies = resultMovies;
+        this.movieItems = movieItems;
     }
 
 //    public MovieAdapter(List<ResultMovie> resultMovies) {
@@ -35,12 +35,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 //    }
 
 
-
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_cardview_movie, viewGroup, false);
+        View view = LayoutInflater.from(context ).inflate(R.layout.item_cardview_movie, viewGroup, false);
         return new MovieHolder(view);
+
     }
 
     @Override
@@ -52,11 +52,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
                 .load("https://image.tmdb.org/t/p/w185/" + resultMovies.get(position).getPosterPath())
                 .into(holder.imgPhoto);
 
-        holder.tvVote.setText(""+resultMovies.get(position).getVoteAverage());
+        holder.tvVote.setText("" + resultMovies.get(position).getVoteAverage());
     }
-
-
-
 
 
     @Override
@@ -66,7 +63,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgPhoto;
-        TextView tvName,tvVote;
+        TextView tvName, tvVote;
         Movie movie;
 
 
@@ -74,7 +71,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.img_item_photo);
             tvName = itemView.findViewById(R.id.tv_item_name);
-            tvVote=itemView.findViewById(R.id.tv_item_vote);
+            tvVote = itemView.findViewById(R.id.tv_item_vote);
         }
 
 
@@ -86,5 +83,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         }
 
     }
+
+
 }
 
