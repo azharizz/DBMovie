@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.mymoviecataloguenew.R;
 import com.example.mymoviecataloguenew.activity.DetailActivity;
 import com.example.mymoviecataloguenew.model.ResultTv;
+import com.example.mymoviecataloguenew.model.TvItem;
 import com.example.mymoviecataloguenew.useless.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -21,11 +22,12 @@ import java.util.List;
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
     private Context context;
     List<ResultTv> resultTvs;
+    public static TvItem tvItems;
 
-    public TvAdapter(List<ResultTv> resultTvs) {
-        this.resultTvs = resultTvs;
+    public TvAdapter(Context context, TvItem tvItems) {
+        this.context = context;
+        this.tvItems = tvItems;
     }
-
 
     @NonNull
     @Override
@@ -36,18 +38,20 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TvHolder holder, int position) {
-        holder.tvName.setText(resultTvs.get(position).getName());
+
+        holder.tvName.setText(tvItems.getResults().get(position).getName());
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w185/" + resultTvs.get(position).getPosterPath())
+                .load("https://image.tmdb.org/t/p/w185/" + tvItems.getResults().get(position).getPosterPath())
                 .into(holder.imgPhoto);
-        holder.tvVote.setText(""+resultTvs.get(position).getVoteAverage());
+
+        holder.tvVote.setText("" + tvItems.getResults().get(position).getVoteAverage());
     }
 
 
 
     @Override
     public int getItemCount() {
-        return resultTvs.size();
+        return tvItems.getResults().size();
     }
 
     class TvHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

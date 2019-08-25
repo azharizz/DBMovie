@@ -1,16 +1,21 @@
 package com.example.mymoviecataloguenew.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mymoviecataloguenew.useless.Movie;
 import com.example.mymoviecataloguenew.R;
+import com.squareup.picasso.Picasso;
+
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_ID;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_RATING;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_TITLE;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_URL;
 
 public class DetailActivity extends AppCompatActivity {
-    public static final String EXTRA_MOVIE = "extra_movie";
     TextView detailName;
     TextView detailDescription;
     TextView detailDirector;
@@ -24,13 +29,12 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        Intent intent = getIntent();
 
         detailName = findViewById(R.id.tv_detail_name);
         detailDescription = findViewById(R.id.tv_detail_description);
         detailPhoto = findViewById(R.id.img_detail);
         detailDirector = findViewById(R.id.tv_detail_director);
-        detailGenre = findViewById(R.id.tv_detail_genre);
 
         back = findViewById(R.id.img_back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -40,11 +44,16 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        detailName.setText(movie.getName() + " (" + movie.getYear() + ")");
-        detailDescription.setText(movie.getDescription());
-//        detailPhoto.setImageResource(movie.getPhoto());
-        detailDirector.setText(": " + movie.getDirector());
-        detailGenre.setText(": " + movie.getGenre());
+        String title = intent.getStringExtra(EXTRA_TITLE);
+        String imageUrl = intent.getStringExtra(EXTRA_URL);
+        int id = intent.getIntExtra(EXTRA_ID, 0);
+        double rating = intent.getDoubleExtra(EXTRA_RATING, 0);
+
+        detailName.setText(title);
+        Picasso.with(this)
+                .load("https://image.tmdb.org/t/p/w185/" + imageUrl)
+                .into(detailPhoto);
+
 
 
     }

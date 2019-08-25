@@ -1,7 +1,7 @@
 package com.example.mymoviecataloguenew.adap;
 
+
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,60 +11,62 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymoviecataloguenew.R;
-import com.example.mymoviecataloguenew.activity.DetailActivity;
 import com.example.mymoviecataloguenew.model.MovieItem;
-import com.example.mymoviecataloguenew.model.ResultMovie;
-import com.example.mymoviecataloguenew.useless.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
     private Context context;
-    public static List<ResultMovie> resultMovies;
-    public static List<MovieItem> movieItems;
+    private ArrayList<MovieItem> mExampleList;
+    private OnItemClickListener mListener;
 
-
-    public MovieAdapter(Context context, List<MovieItem> movieItems) {
-        this.context = context;
-        this.movieItems = movieItems;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
-//    public MovieAdapter(List<ResultMovie> resultMovies) {
-//        this.resultMovies = resultMovies;
-//    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+
+    public MovieAdapter(Context context, ArrayList<MovieItem> exampleList) {
+        this.context = context;
+        this.mExampleList = exampleList;
+    }
 
 
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context ).inflate(R.layout.item_cardview_movie, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cardview_movie, viewGroup, false);
         return new MovieHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
-
+        MovieItem currentItem = mExampleList.get(position);
 // set the data
-        holder.tvName.setText(resultMovies.get(position).getTitle());
+        holder.tvName.setText(currentItem.getmTitle());
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w185/" + resultMovies.get(position).getPosterPath())
+                .load("https://image.tmdb.org/t/p/w185/" + currentItem.getmImageUrl())
                 .into(holder.imgPhoto);
 
-        holder.tvVote.setText("" + resultMovies.get(position).getVoteAverage());
+        holder.tvVote.setText("" + currentItem.getmRating());
+        holder.id = currentItem.getId();
     }
 
 
     @Override
     public int getItemCount() {
-        return resultMovies.size();
+        return mExampleList.size();
     }
 
-    class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MovieHolder extends RecyclerView.ViewHolder {
         ImageView imgPhoto;
         TextView tvName, tvVote;
-        Movie movie;
+        int id;
 
 
         MovieHolder(View itemView) {
@@ -72,15 +74,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             imgPhoto = itemView.findViewById(R.id.img_item_photo);
             tvName = itemView.findViewById(R.id.tv_item_name);
             tvVote = itemView.findViewById(R.id.tv_item_vote);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
 
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("key", movie);
-            context.startActivity(intent);
-        }
 
     }
 
