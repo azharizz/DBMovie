@@ -18,4 +18,5 @@
     <string name="director">Director</string>
     <string name="drama_action_animation">DRAMA, ACTION, ANIMATION</string>
     <string name="eichiro_oda">Eichiro Oda</string>
+    <string name="release_date">Release Date:</string>
 </resources>

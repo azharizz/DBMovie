@@ -1,56 +1,32 @@
 
 package com.example.mymoviecataloguenew.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
 public class TvItem {
+    private int id;
+    private String mImageUrl;
+    private String mTitle;
+    private double mRating;
 
-    @SerializedName("page")
-    @Expose
-    private Integer page;
-    @SerializedName("total_results")
-    @Expose
-    private Integer totalResults;
-    @SerializedName("total_pages")
-    @Expose
-    private Integer totalPages;
-    @SerializedName("results")
-    @Expose
-    private List<ResultTv> results = null;
-
-    public Integer getPage() {
-        return page;
+    public TvItem(int id, String mImageUrl, String mTitle, double mRating) {
+        this.id = id;
+        this.mImageUrl = mImageUrl;
+        this.mTitle = mTitle;
+        this.mRating = mRating;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public int getId() {
+        return id;
     }
 
-    public Integer getTotalResults() {
-        return totalResults;
+    public String getmImageUrl() {
+        return mImageUrl;
     }
 
-    public void setTotalResults(Integer totalResults) {
-        this.totalResults = totalResults;
+    public String getmTitle() {
+        return mTitle;
     }
 
-    public Integer getTotalPages() {
-        return totalPages;
+    public double getmRating() {
+        return mRating;
     }
-
-    public void setTotalPages(Integer totalPages) {
-        this.totalPages = totalPages;
-    }
-
-    public List<ResultTv> getResults() {
-        return results;
-    }
-
-    public void setResults(List<ResultTv> results) {
-        this.results = results;
-    }
-
 }

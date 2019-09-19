@@ -17,12 +17,17 @@ import com.example.mymoviecataloguenew.base.BaseAppCompatActivity;
 import com.example.mymoviecataloguenew.fragment.MovieFragment;
 
 public class MainActivity extends BaseAppCompatActivity {
+    private String LANGUAGE;
     Toolbar toolbar;
     TabLayout tabLayout;
     TabItem tabMovies;
     TabItem tabTvShow;
     ViewPager viewPager;
     private Fragment pageContent = new MovieFragment();
+
+    public String getLANGUAGE() {
+        return LANGUAGE;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,6 @@ public class MainActivity extends BaseAppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(getString(R.string.app_name));
 
-
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.viewPager, pageContent).commit();
         } else {
@@ -66,7 +70,14 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_change_settings) {
+            LANGUAGE="id-ID";
+//            Intent intent=new Intent(this,MainActivity.class);
             Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(intent);
+        }
+        else if (item.getItemId() == R.id.favorite_change) {
+//            LANGUAGE="en-US";
+            Intent intent=new Intent(this,FavoriteActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

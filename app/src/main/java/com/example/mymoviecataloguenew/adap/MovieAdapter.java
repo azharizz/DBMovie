@@ -2,8 +2,10 @@ package com.example.mymoviecataloguenew.adap;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +13,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymoviecataloguenew.R;
+import com.example.mymoviecataloguenew.activity.DetailActivity;
 import com.example.mymoviecataloguenew.model.MovieItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_ID;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_RATING;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_TITLE;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_URL;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
     private Context context;
     private ArrayList<MovieItem> mExampleList;
     private OnItemClickListener mListener;
+    private LinkedList<MovieItem> listFavorites;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -35,6 +45,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         this.mExampleList = exampleList;
     }
 
+    public MovieAdapter(Context context) {
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -46,7 +59,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
-        MovieItem currentItem = mExampleList.get(position);
+        final MovieItem currentItem = mExampleList.get(position);
 // set the data
         holder.tvName.setText(currentItem.getmTitle());
         Picasso.with(holder.itemView.getContext())
@@ -55,6 +68,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         holder.tvVote.setText("" + currentItem.getmRating());
         holder.id = currentItem.getId();
+
+        holder.imgPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(context, DetailActivity.class);
+//                MovieItem clickedItem = mExampleList.get(position);
+
+                detailIntent.putExtra(EXTRA_RATING, currentItem.getmTitle());
+                detailIntent.putExtra(EXTRA_ID, currentItem.getId());
+                detailIntent.putExtra(EXTRA_TITLE, currentItem.getmTitle());
+                detailIntent.putExtra(EXTRA_URL, currentItem.getmImageUrl());
+
+                Log.d("titleee", EXTRA_TITLE);
+                context.startActivity(detailIntent);
+            }
+        });
     }
 
 
@@ -89,6 +118,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         }
 
 
+    }
+
+    public void setListFavorite(LinkedList<MovieItem> listFavorites) {
+        this.listFavorites = listFavorites;
     }
 
 

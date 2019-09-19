@@ -12,21 +12,23 @@ import android.widget.TextView;
 
 import com.example.mymoviecataloguenew.R;
 import com.example.mymoviecataloguenew.activity.DetailActivity;
-import com.example.mymoviecataloguenew.model.ResultTv;
 import com.example.mymoviecataloguenew.model.TvItem;
-import com.example.mymoviecataloguenew.useless.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
+
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_ID;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_RATING;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_TITLE;
+import static com.example.mymoviecataloguenew.fragment.MovieFragment.EXTRA_URL;
 
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
     private Context context;
-    List<ResultTv> resultTvs;
-    public static TvItem tvItems;
+    private ArrayList<TvItem> mExampleList;
 
-    public TvAdapter(Context context, TvItem tvItems) {
+    public TvAdapter(Context context, ArrayList<TvItem> exampleList) {
         this.context = context;
-        this.tvItems = tvItems;
+        this.mExampleList = exampleList;
     }
 
     @NonNull
@@ -38,40 +40,49 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TvHolder holder, int position) {
-
-        holder.tvName.setText(tvItems.getResults().get(position).getName());
+        final TvItem currentItem = mExampleList.get(position);
+// set the data
+        holder.tvName.setText(currentItem.getmTitle());
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w185/" + tvItems.getResults().get(position).getPosterPath())
+                .load("https://image.tmdb.org/t/p/w185/" + currentItem.getmImageUrl())
                 .into(holder.imgPhoto);
 
-        holder.tvVote.setText("" + tvItems.getResults().get(position).getVoteAverage());
+        holder.tvVote.setText("" + currentItem.getmRating());
+        holder.id = currentItem.getId();
+
+        holder.imgPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(context, DetailActivity.class);
+//                MovieItem clickedItem = mExampleList.get(position);
+
+                detailIntent.putExtra(EXTRA_RATING, currentItem.getmTitle());
+                detailIntent.putExtra(EXTRA_ID, currentItem.getId());
+                detailIntent.putExtra(EXTRA_TITLE, currentItem.getmTitle());
+                detailIntent.putExtra(EXTRA_URL, currentItem.getmImageUrl());
+
+                context.startActivity(detailIntent);
+            }
+        });
     }
 
 
 
     @Override
     public int getItemCount() {
-        return tvItems.getResults().size();
+        return mExampleList.size();
     }
 
-    class TvHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TvHolder extends RecyclerView.ViewHolder{
         ImageView imgPhoto;
         TextView tvName,tvVote;
-        Movie movie;
-
+        int id;
 
         TvHolder(View itemView) {
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.img_item_photo);
             tvName = itemView.findViewById(R.id.tv_item_name);
-            tvVote=itemView.findViewById(R.id.tv_item_vote);
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("key", movie);
-            context.startActivity(intent);
+            tvVote = itemView.findViewById(R.id.tv_item_vote);
         }
     }
 }

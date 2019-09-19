@@ -3,8 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_change_settings"
-        android:title="@string/change_language_settings"
+    android:id="@+id/action_change_settings"
+    android:title="@string/change_language_settings"
+    app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/favorite_change"
+        android:title="Favorite Movie"
         app:showAsAction="never"/>
+
+
 
 </menu>
